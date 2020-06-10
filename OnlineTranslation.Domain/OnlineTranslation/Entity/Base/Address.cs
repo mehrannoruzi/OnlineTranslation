@@ -1,53 +1,50 @@
-﻿using System;
-using Elk.Core;
-using OnlineTranslation.Domain.Resource;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace OnlineTranslation.Domain
+﻿namespace Rasmi724.Domain.Entity
 {
+    using System;
+    using Properties;
+    using System.ComponentModel.DataAnnotations;
+    using System.ComponentModel.DataAnnotations.Schema;
+
     [Table(nameof(Address), Schema = "Base")]
-    public class Address : IInsertDateProperties, IEntity
+    public class Address
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int AddressId { get; set; }
 
+        [Display(Name = nameof(DisplayName.MobileNumber), ResourceType = typeof(DisplayName))]
+        [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public long MobileNumber  { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        [Column(TypeName ="varchar")]
+        [Display(Name = nameof(DisplayName.Tel), ResourceType = typeof(DisplayName))]
+        [MaxLength(11, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [StringLength(11, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string Tel { get; set; }
+
         [ForeignKey(nameof(UserId))]
-        [Display(Name = nameof(Strings.User), ResourceType = typeof(Strings))]
         public User User { get; set; }
-        [Display(Name = nameof(Strings.User), ResourceType = typeof(Strings))]
+
         [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
         public Guid UserId { get; set; }
 
-        [Display(Name = nameof(Strings.AddressType), ResourceType = typeof(Strings))]
+        [Display(Name = nameof(DisplayName.Description), ResourceType = typeof(DisplayName))]
+        [MaxLength(40, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [StringLength(40, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string Location { get; set; }
+
+        [Display(Name = nameof(DisplayName.Sender), ResourceType = typeof(DisplayName))]
         [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
-        public AddressType AddressType { get; set; }
-
-        [Display(Name = nameof(Strings.IsDefault), ResourceType = typeof(Strings))]
-        public bool IsDefault { get; set; }
-
-        [Display(Name = nameof(Strings.Latitude), ResourceType = typeof(Strings))]
-        public double Latitude { get; set; }
-
-        [Display(Name = nameof(Strings.Longitude), ResourceType = typeof(Strings))]
-        public double Longitude { get; set; }
-
-        [Display(Name = nameof(Strings.InsertDate), ResourceType = typeof(Strings))]
-        public DateTime InsertDateMi { get; set; }
-
-        [Column(TypeName = "char(10)")]
-        [Display(Name = nameof(Strings.InsertDate), ResourceType = typeof(Strings))]
-        [MaxLength(10, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
-        public string InsertDateSh { get; set; }
-
-        [Display(Name = nameof(Strings.ReciverName), ResourceType = typeof(Strings))]
-        public string ReciverName { get; set; }
-
-        [Display(Name = nameof(Strings.Address), ResourceType = typeof(Strings))]
+        [MaxLength(80, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [StringLength(80, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string FullName { get; set; }
+         
+        [Display(Name = nameof(DisplayName.FullAddress), ResourceType = typeof(DisplayName))]
         [Required(ErrorMessageResourceName = nameof(ErrorMessage.Required), ErrorMessageResourceType = typeof(ErrorMessage))]
-        [MaxLength(250, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
-        [StringLength(250, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
-        public string AddressDetails { get; set; }
+        [MaxLength(350, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        [StringLength(350, ErrorMessageResourceName = nameof(ErrorMessage.MaxLength), ErrorMessageResourceType = typeof(ErrorMessage))]
+        public string FullAddress { get; set; }
     }
 }
